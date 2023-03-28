@@ -1,14 +1,12 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-// Import the model
 
-// Place the array you want to seed
+const Kata = require('../models/Kata')
+const kata = require('./data/kata')
 
 mongoose.connect(process.env.MONGO_URL)
   .then(x => console.log(`Connected to ${x.connection.name}`))
-  .then(() => {
-    return // Model.create(array)
-  })
+  .then(() => Kata.create(kata))
   .then(() => {
     console.log('Seed done 🌱');
   })

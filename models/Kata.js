@@ -17,7 +17,7 @@ const kataSchema = new Schema({
     type: String,
     required: true
   },
-  example: String,
+  example: Array,
   output: {
     type: Array,
     required: true
@@ -32,4 +32,4 @@ const kataSchema = new Schema({
     timestamps: true
   });
 
-module.exports = model("User", userSchema);
+module.exports = model("Kata", kataSchema);
