@@ -316,6 +316,80 @@ export const kata =[
     ],
         "level": 4
     },
+    {
+        "name": "Don't give me five!",
+        "initialValue": "function dontGiveMeFive(start, end)\n{\nreturn 0;\n}",
+        "input":"dontGiveMeFive(${input})",
+        "instructions": "<h4>DESCRIPTION:</h4><h3>Don't give me five!</h3><p>In this kata you get the start number and the end number of a region and should return the count of all numbers except numbers with a 5 in it. The start and the end number are both inclusive!</p><p>Examples:</p><ControlledEditor value={example} options={{    lineWrapping:true, mode:'javascript', theme: 'material', readOnly:true}}/><p>The result may contain fives. ;-)<br/>The start number will always be smaller than the end number.<br/>Both numbers can be also negative!</p>      <p>I'm very curious for your solutions and the way you solve it. Maybe someone of you will find an easy pure mathematics solution.</p><p>Have fun coding it and please don't forget to vote and rank this kata! :-)</p> <p>I have also created other katas. Take a look if you enjoyed this kata!</p>",
+        "example": "1,9 -> 1,2,3,4,6,7,8,9 -> Result 8\n4,17 -> 4,6,7,8,9,10,11,12,13,14,16,17 -> Result 12",
+        "output": [ [(4,17), 12],
+                    [(1,9), 8],
+                    [(16,289),220],
+                    [[[0,0]],0],
+                    [(-4,92),79],
+                    [(-4,0),5],
+                    [(0,25.6),23],
+                    [(6,12345),8298],
+                    [(56,9864),6404],
+                    [(-828,0),593]
+    ],
+        "level": 4
+    },
+    {
+        "name": "Is it a palindrome?",
+        "initialValue": "function isPalindrome(x) {\n  // your code here\n}",
+        "input":"isPalindrome(${input})",
+        "instructions": "<h4>DESCRIPTION:</h4><p>Write a function that checks if a given string (case insensitive) is a <a href='https://en.wikipedia.org/wiki/Palindrome'>palindrome</a>.</p>",
+        "output": [ ["a", true],
+                    ["aba", true],
+                    ["Abba", true],
+                    ["hello", false],
+                    ["Bob", true],
+                    ["Madam", true],
+                    ["AbBa", true],
+                    ["", true],
+                    ["AbCdedcba", true],
+                    ['Y.aiA.y',true]
+    ],
+        "level": 5
+    },
+    {
+        "name": "Get the Middle Character",
+        "initialValue": "function getMiddle(s)\n{\n  //Code goes here!\n}",
+        "input":"getMiddle(${input})",
+        "instructions": "<h4>DESCRIPTION:</h4><p>You are going to be given a word. Your job is to return the middle character of the word. If the word's length is odd, return the middle character. If the word's length is even, return the middle 2 characters.</p><p>Examples:</p><ControlledEditor value={example} options={{    lineWrapping:true, mode:'javascript', theme: 'material', readOnly:true}}/><p>Input</p><p>A word (string) of length <span className={border}> 0 {`< str < 1000`}</span> (In javascript you may get slightly more than 1000 in some test cases due to an error in the test cases). You do not need to test for this. This is only here to tell you that you do not need to worry about your solution timing out.</p><p>Output</p><p>The middle character(s) of the word represented as a string.</p>",
+        "example": 'Kata.getMiddle("test") should return "es"\n \nKata.getMiddle("testing") should return "t"\n \nKata.getMiddle("middle") should return "dd"\n \nKata.getMiddle("A") should return "A"',
+        "output": [ ["test","es"],
+                    ["testing","t"],
+                    ["middle","dd"],
+                    ["A","A"],
+                    ['',''],
+                    ['baby born',''],
+                    ['aladdin','d'],
+                    ['keyboard','bo'],
+                    ['    ', '  '],
+                    ['allEhOp','E']
+    ],
+        "level": 4
+    },
+    {
+        "name": "Disemvowel Trolls",
+        "initialValue": "function disemvowel(str) {\n return str;\n}",
+        "input":"disemvowel(${input})",
+        "instructions": "<h4>DESCRIPTION:</h4><p>Trolls are attacking your comment section!</p><p>A common way to deal with this situation is to remove all of the vowels from the trolls' comments, neutralizing the threat.</p> <p>Your task is to write a function that takes a string and return a new string with all vowels removed.</p>  <p>For example, the string 'This website is for losers LOL!' would become 'Ths wbst s fr lsrs LL!'.</p><p>Note: for this kata <span className={border}>y</span> isn't considered a vowel.</p>",
+        "output": [ ["This website is for losers LOL!", "Ths wbst s fr lsrs LL!"],
+                    ["No offense but,\nYour writing is among the worst I've ever read","N ffns bt,\nYr wrtng s mng th wrst 'v vr rd"],
+                    ["What are you, a communist?","Wht r y,  cmmnst?"],
+                    ['hello, is it me your looking for','hll, s t m yr lkng fr'],
+                    ['',''],
+                    ['Kata fruskAY','Kt frskY'],
+                    ['aladdin','d'],
+                    ['     6ygjaAh','     6ygjh'],
+                    [' i',' '],
+                    ['aaaaeiaoouaoIiau','']
+    ],
+        "level": 4
+    },
 ] 
     
 
