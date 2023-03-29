@@ -6,6 +6,10 @@ const commentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Solution",
   },
+  kata: {
+    type: Schema.Types.ObjectId,
+    ref: "Kata",
+  },
   comment: {
     type: String,
     required:true

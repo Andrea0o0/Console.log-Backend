@@ -30,7 +30,7 @@ router.get('/:kataId', async (req, res, next) => {
 // @desc    Edit one kata
 // @route   PUT /kata/:kataId
 // @access  Admin
-router.put('/:kataId', isAdmin, async (req, res, next) => {
+router.put('/:kataId', isAuthenticated, isAdmin, async (req, res, next) => {
   const { kataId } = req.params
   try {
       const editKata = await Kata.findByIdAndUpdate(kataId, req.body, { new: true})
@@ -43,7 +43,7 @@ router.put('/:kataId', isAdmin, async (req, res, next) => {
 // @desc    Create one kata
 // @route   POST /kata
 // @access  Admin
-router.post('/', isAdmin, async (req, res, next) => {
+router.post('/', isAuthenticated, isAdmin, async (req, res, next) => {
   try {
       const newKata = await Kata.create(req.body)
       res.status(201).json(newKata)
@@ -55,10 +55,10 @@ router.post('/', isAdmin, async (req, res, next) => {
 // @desc    Delete one kata
 // @route   DELETE /kata/:kataId
 // @access  Admin
-router.delete('/:kataId', isAdmin, async (req, res, next) => {
+router.delete('/:kataId', isAuthenticated, isAdmin, async (req, res, next) => {
   const { kataId } = req.params
   try {
-      const deletekata = await Kata.findByIdAndDelete(kataId)
+      const deleteKata = await Kata.findByIdAndDelete(kataId)
       res.status(201).json(deleteKata)
   } catch (error) {
       next(error)

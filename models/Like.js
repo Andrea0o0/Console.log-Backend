@@ -6,6 +6,10 @@ const likeSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Solution",
   },
+  kata: {
+    type: Schema.Types.ObjectId,
+    ref: "Kata",
+  },
   user: {
     type: Schema.Types.ObjectId,
     ref: "User",

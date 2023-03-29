@@ -10,6 +10,8 @@ const indexRouter = require('./routes');
 const authRouter = require('./routes/auth');
 const kataRouter = require('./routes/kata');
 const solutionsRouter = require('./routes/solutions');
+const likesRouter = require('./routes/likes');
+const commentsRouter = require('./routes/comments');
 const championRouter = require('./routes/champions')
 
 const app = express();
@@ -29,6 +31,8 @@ app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/kata', kataRouter);
 app.use('/solutions',solutionsRouter)
+app.use('/likes', likesRouter)
+app.use('/comments', commentsRouter)
 app.use('/champion', championRouter)
 
 

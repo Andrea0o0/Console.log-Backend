@@ -48,7 +48,7 @@ router.get('/:solutionId', isAuthenticated, async (req, res, next) => {
 });
 
 // @desc    Edit one solution INCOMPLETED
-// @route   PUT /solution/:solutionId
+// @route   PUT /solutions/:solutionId
 // @access  Private
 router.put('/:solutionId', isAuthenticated, async (req, res, next) => {
   const { solutionId } = req.params
@@ -77,12 +77,13 @@ router.post('/', isAuthenticated, async (req, res, next) => {
 });
 
 // @desc    Delete one solution
-// @route   DELETE /solution/:solutionId
+// @route   DELETE /solutions/:solutionId
 // @access  Admin
-router.delete('/:solutionId', isAdmin, async (req, res, next) => {
+router.delete('/:solutionId', isAuthenticated, isAdmin, async (req, res, next) => {
   const { solutionId } = req.params
   try {
-      const deletesolution = await Solution.findByIdAndDelete(solutionId)
+      console.log(solutionId)
+      const deleteSolution = await Solution.findByIdAndDelete(solutionId)
       res.status(201).json(deleteSolution)
   } catch (error) {
       next(error)
