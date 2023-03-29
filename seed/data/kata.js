@@ -520,6 +520,183 @@ const kata = [
     ],
         "level": 3
     },
+    {
+        "name": "Count characters in your string",
+        "initialValue": "function count(string) {\n  // TODO\n  return {};\n}",
+        "input":"count(${input})",
+        "instructions": "<p>The main idea is to count all the occurring characters in a string. If you have a string like <span className={border}>aba</span>, then the result should be <span className={border}>{`{'a': 2, 'b': 1}`}</span>.</p><p>What if the string is empty? Then the result should be empty object literal, <span className={border}>{}</span>.</p>",
+        "output": [ ['', {}],
+                    ['a', {'a': 1}],
+                    ['ab', {'a': 1, 'b': 1}],
+                    ['aba', {'a': 2, 'b': 1}],
+                    ['ABC', {'A': 1, 'B': 1, 'C': 1}],
+                    ['Da..',{ D: 1, a: 1, '.': 2 }],
+                    ['CXxxAb',{ C: 1, X: 1, x: 2, A: 1, b: 1 }],
+                    ['0zK´k',{ '0': 1, z: 1, K: 1, '´': 1, k: 1 }],
+                    ['pJkakJJa',{ p: 1, J: 3, k: 2, a: 2 }],
+                    ['AakHlJBiu7CHKJKJvJGCjhvBKHJVJHCKHVJHhmchhvhmv',{ '7': 1, A: 1, a: 1, k: 1, H: 6, l: 1, J: 7, B: 2, i: 1, u: 1, C: 3, K: 4, v: 4,  G: 1, j: 1, h: 5, V: 2, m: 2, c: 1 }]
+    ],
+        "level": 3
+    },
+    {
+        "name": "Find the odd int",
+        "initialValue": "function findOdd(A) {\n  //happy coding!\n  return 0;\n}",
+        "input":"findOdd(${input})",
+        "instructions": "<p>Given an array of integers, find the one that appears an odd number of times.</p><p>There will always be only one integer that appears an odd number of times.</p><p>Examples</p><p><span className={border}>[7]</span> should return <span className={border}>7</span>, because it occurs 1 time (which is odd).</p><p><span className={border}>[0]</span> should return <span className={border}>0</span>, because it occurs 1 time (which is odd).</p><p><span className={border}>[1,1,2]</span> should return <span className={border}>2</span>, because it occurs 1 time (which is odd).</p><p><span className={border}>[0,1,0,1,0]</span> should return <span className={border}>0</span>, because it occurs 3 times (which is odd).</p>",
+        "output": [ [[7], 7],
+                    [[1,1,2], 2],
+                    [[1,2,2,3,3,3,4,3,3,3,2,2,1], 4],
+                    [[20,1,-1,2,-2,3,3,5,5,1,2,4,20,4,-1,-2,5], 5],
+                    [[1,1,2,-2,5,2,4,4,-1,-2,5], -1],
+                    [[20,1,1,2,2,3,3,5,5,4,20,4,5], 5],
+                    [[10], 10],
+                    [[1,1,1,1,1,1,10,1,1,1,1], 10],
+                    [[5,4,3,2,1,5,4,3,2,10,10], 1],
+                    [[0,1,0,1,0], 0]
+    ],
+        "level": 3
+    },
+    {
+        "name": "Moving Zeros To The End",
+        "initialValue": "function moveZeros(arr) {\n  return\n}",
+        "input":"moveZeros(${input})",
+        "instructions": "<p>Write an algorithm that takes an array and moves all of the zeros to the end, preserving the order of the other elements.</p><ControlledEditor value={example[0]} options={{    lineWrapping:true, mode:'javascript', theme: 'material', readOnly:true}}/>",
+        "example":['moveZeros([false,1,0,1,2,0,1,3,"a"]) // returns[false,1,1,2,1,3,"a",0,0]'],
+        "output": [ [[1,2,0,1,0,1,0,3,0,1], [1, 2, 1, 1, 3, 1, 0, 0, 0, 0]],
+                    [['hello',3,14,'bye',0,0,'o','no','no'],[
+                        'hello', 3, 14,'bye','o', 'no',   'no',  0, 0 ]],
+                    [[0,'.',0.1,'hi',0.0],[ '.', 0.1, 'hi', 0, 0 ]],
+                    [[1,'f','ho',0,'ho',0],[ 1, 'f', 'ho', 'ho', 0, 0 ]],
+                    [[45,82,'fgh',0.00,0,7],[ 45, 82, 'fgh', 7, 0, 0 ]],
+                    [[0,0.00000,0.000001,'h','hgfh',3],[ 0.000001, 'h', 'hgfh', 3, 0, 0 ]],
+                    [[0,0,78,'ldckn',true,false,0.0001,0.000000000,false,'jhdcbc'],[ 78,'ldckn',true, false, 0.0001, false,'jhdcbc', 0, 0, 0 ]],
+                    [[0,9273,'kjsb','boolean','0',true],[ 9273, 'kjsb', 'boolean', '0', true, 0 ]],
+                    [[78,57,'true',0,0.000,true,'skkn',0.00003],[ 78, 57, 'true', true, 'skkn', 0.00003, 0, 0 ]],
+                    [[true,false,'jd',673,0.3,'dh'],[ true, false, 'jd', 673, 0.3, 'dh' ]]
+    ],
+        "level": 2
+    },
+    {
+        "name": "Simple Pig Latin",
+        "initialValue": "function pigIt(str){\n  //Code here\n}",
+        "input":"pigIt(${input})",
+        "instructions": '<p>Move the first letter of each word to the end of it, then add "ay" to the end of the word. Leave punctuation marks untouched.</p><p>Examples</p><ControlledEditor value={example[0]} options={{    lineWrapping:true, mode:"javascript", theme: "material", readOnly:true}}/>',
+        "example":["pigIt('Pig latin is cool'); // igPay atinlay siay oolcay\npigIt('Hello world !');     // elloHay orldway !"],
+        "output": [ ['Pig latin is cool','igPay atinlay siay oolcay'],
+                    ['This is my string','hisTay siay ymay tringsay'],
+                    ['How are you?','owHay reaay ou?yay'],
+                    ['under THE Influenceeeay :D','nderuay HETay nfluenceeeayIay D:ay'],
+                    ['Memories fading, I try to hold on','emoriesMay ading,fay Iay rytay otay oldhay noay'],
+                    ['The sound of your voice was my all, was my home','heTay oundsay foay ouryay oicevay asway ymay ll,aay asway ymay omehay'],
+                    ['1 2 3 4 5 buajajaja','1ay 2ay 3ay 4ay 5ay uajajajabay'],
+                    ["Summertime and the livin' is easy","ummertimeSay ndaay hetay ivin'lay siay asyeay"],
+                    ['Stars shining bright above you. Night breezes seem to whisper I love you.','tarsSay hiningsay rightbay boveaay ou.yay ightNay reezesbay eemsay otay hisperway Iay ovelay ou.yay'],
+                    ['L is for the way you look at me. O is for the only one I see. V is very, very extraordinary. E is even more than anyone that you adore can','Lay siay orfay hetay ayway ouyay ooklay taay e.may Oay siay orfay hetay nlyoay neoay Iay ee.say Vay siay ery,vay eryvay xtraordinary.eay Eay siay veneay oremay hantay nyoneaay hattay ouyay doreaay ancay']
+    ],
+        "level": 2
+    },
+    {
+        "name": "Human Readable Time",
+        "initialValue": "function humanReadable (seconds) {\n  return '';\n}",
+        "input":"humanReadable(${input})",
+        "instructions": "<p>Write a function, which takes a non-negative integer (seconds) as input and returns the time in a human-readable format <span className={border}>(HH:MM:SS)</span></p><li><span className={border}>HH</span> = hours, padded to 2 digits, range: 00 - 99</li>  <li><span className={border}>MM</span> = minutes, padded to 2 digits, range: 00 - 59</li><li><span className={border}>SS</span> = seconds, padded to 2 digits, range: 00 - 59</li><p>The maximum time never exceeds 359999 <span className={border}>(99:59:59)</span></p><p>You can find some examples in the test fixtures.</p>",
+        "output": [ [0, '00:00:00'],
+                    [59, '00:00:59']
+                    [60, '00:01:00'],
+                    [90, '00:01:30'],
+                    [3599, '00:59:59'],
+                    [3600, '01:00:00'],
+                    [45296, '12:34:56'],
+                    [86399, '23:59:59'],
+                    [86400, '24:00:00'],
+                    [359999, '99:59:59']
+    ],
+        "level": 2
+    },
+    {
+        "name": "RGB To Hex Conversion",
+        "initialValue": "function rgb(r, g, b){\n  // complete this function\n}",
+        "input":"rgb(${input})",
+        "instructions": "<p>The rgb function is incomplete. Complete it so that passing in RGB decimal values will result in a hexadecimal representation being returned. Valid decimal values for RGB are 0 - 255. Any values that fall out of that range must be rounded to the closest valid value.</p><p>Note: Your answer should always be 6 characters long, the shorthand with 3 will not work here.</p><p>The following are examples of expected output values:</p><ControlledEditor value={example[0]} options={{    lineWrapping:true, mode:'javascript', theme: 'material', readOnly:true}}/>",
+        "example":["rgb(255, 255, 255) // returns FFFFFF\nrgb(255, 255, 300) // returns FFFFFF\nrgb(0,0,0) // returns 000000\nrgb(148, 0, 211) // returns 9400D3"],
+        "output": [ [(0, 0, 0), '000000'],
+                    [(0, 0, -20), '000000']
+                    [(300,255,255), 'FFFFFF'],
+                    [(173,255,47), 'ADFF2F'],
+                    [(200,40,28), 'C8281C'],
+                    [(45,78,156), '2D4E9C'],
+                    [(200,148,8), 'C89408'],
+                    [(5,249,16), '05F910'],
+                    [(37,96,189), '2560BD'],
+                    [(250,56,197), 'FA38C5']
+    ],
+        "level": 2
+    },
+    {
+        "name": "Directions Reduction",
+        "initialValue": "function dirReduc(arr){\n  // ...\n}",
+        "input":"dirReduc(${input})",
+        "instructions": `  <p><b>Once upon a time, on a way through the old wild mountainous west,…</b></p>
+        <p>… a man was given directions to go from one point to another. The directions were "NORTH", "SOUTH", "WEST", "EAST". Clearly "NORTH" and "SOUTH" are opposite, "WEST" and "EAST" too.</p>
+        <p>Going to one direction and coming back the opposite direction right away is a needless effort. Since this is the wild west, with dreadful weather and not much water, it's important to save yourself some energy, otherwise you might die of thirst!</p>
+        <p><b>How I crossed a mountainous desert the smart way.</b></p>
+        <ControlledEditor value={example[0]} options={{    lineWrapping:true, mode:'javascript', theme: 'material', readOnly:true}}/>
+        <p>You can immediately see that going "NORTH" and immediately "SOUTH" is not reasonable, better stay to the same place! So the task is to give to the man a simplified version of the plan. A better plan in this case is simply:</p>
+        <ControlledEditor value={example[1]} options={{    lineWrapping:true, mode:'javascript', theme: 'material', readOnly:true}}/>
+        <p><b>Other examples:</b></p>
+        <p>In <span className={border}>["NORTH", "SOUTH", "EAST", "WEST"]</span>, the direction <span className={border}>"NORTH" + "SOUTH"</span> is going north and coming back right away.</p>
+        <p>The path becomes <span className={border}>["EAST", "WEST"]</span>, now <span className={border}>"EAST"</span> and <span className={border}>"WEST"</span> annihilate each other, therefore, the final result is <span className={border}>[]</span> (nil in Clojure).</p>
+        <p>In ["NORTH", "EAST", "WEST", "SOUTH", "WEST", "WEST"], "NORTH" and "SOUTH" are not directly opposite but they become directly opposite after the reduction of "EAST" and "WEST" so the whole path is reducible to ["WEST", "WEST"].</p>`,
+        "example":['["NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST"].','["WEST"]'],
+        "output": [ [["NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST"],["WEST"]],
+                    [["NORTH", "WEST", "SOUTH", "EAST"],["NORTH", "WEST", "SOUTH", "EAST"]]
+                    [["NORTH", "SOUTH", "EAST", "WEST", "EAST", "WEST"],[]],
+                    [["NORTH", "WEST", "SOUTH", "EAST","EAST","WEST"],[ 'NORTH', 'WEST', 'SOUTH', 'EAST' ]],
+                    [["NORTH", "WEST","NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST"],[ 'NORTH', 'WEST', 'WEST' ]],
+                    [[ 'NORTH', 'WEST', 'WEST','SOUTH' ],[ 'NORTH', 'WEST', 'WEST', 'SOUTH' ]],
+                    [[ 'NORTH','SOUTH', 'WEST', 'WEST', 'SOUTH' ],[ 'WEST', 'WEST', 'SOUTH' ]],
+                    [[ 'NORTH','SOUTH', 'WEST','EAST', 'WEST', 'SOUTH' ],[ 'WEST', 'SOUTH' ]],
+                    [[],[]],
+                    [['SOUTH','EAST','WEST'],[ 'SOUTH' ]]
+    ],
+        "level": 2
+    },
+    {
+        "name": "Snail",
+        "initialValue": "snail = function(array) {\n   // enjoy\n}",
+        "input":"snail(${input})",
+        "instructions": `    <h3>Snail Sort</h3>
+        <p>Given an <span className={border}>n x n</span> array, return the array elements arranged from outermost elements to the middle element, traveling clockwise.</p>
+        <ControlledEditor value={example[0]} options={{    lineWrapping:true, mode:'javascript', theme: 'material', readOnly:true}}/>
+        <p>For better understanding, please follow the numbers of the next array consecutively:</p>
+        <ControlledEditor value={example[1]} options={{    lineWrapping:true, mode:'javascript', theme: 'material', readOnly:true}}/>
+        <p>NOTE: The idea is not sort the elements from the lowest value to the highest; the idea is to traverse the 2-d array in a clockwise snailshell pattern.</p>
+        <p>NOTE 2: The 0x0 (empty matrix) is represented as en empty array inside an array <span className={border}>[ [ ] ]</span>.</p>
+        <img src="https://i.ibb.co/Mh4x2w0/snail.png" alt='snail'/>`,
+        "example":['array = [[1,2,3],\n         [4,5,6],\n         [7,8,9]]\nsnail(array) #=> [1,2,3,6,9,8,7,4,5]','array = [[1,2,3],\n         [8,9,4],\n         [7,6,5]]\nsnail(array) #=> [1,2,3,4,5,6,7,8,9]'],
+        "output": [ [[[]], []],
+                    [[[1]], [1]],
+                    [[[1, 2, 3], [4, 5, 6], [7, 8, 9]], [1, 2, 3, 6, 9, 8, 7, 4, 5]],
+                    [[[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15], [16, 17, 18, 19, 20], [21, 22, 23, 24, 25]], [1, 2, 3, 4, 5, 10, 15, 20, 25, 24, 23, 22, 21, 16, 11, 6, 7, 8, 9, 14, 19, 18, 17, 12, 13]],
+                    [[[1, 2, 3, 4, 5, 6], [20, 21, 22, 23, 24, 7], [19, 32, 33, 34, 25, 8], [18, 31, 36, 35, 26, 9], [17, 30, 29, 28, 27, 10], [16, 15, 14, 13, 12, 11]], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36]],
+                    [[[1, 3, 5, 6], [21, 22, 24, 7], [19, 32, 25, 8], [18, 31, 36, 9]],[ 1,  3,  5,  6,  7,  8, 9, 36, 31, 18, 19, 21, 22, 24, 25, 32
+                     ]],
+                    [[[673,9,2],[7,93,748],[82,927,0]],[ 673,  9, 2, 748, 0, 927, 82, 7,  93 ]],
+                    [[[0,627.9],[true,'h']],[ 0, 627.9, 'h', true ]],
+                    [[[false,0.088,'hi','i'],[true,3,249,'yr'],[3,3,78,86],['t',false,'es',93]],[ false, 0.088, 'hi', 'i', 'yr',  86,    93,   'es',
+                        false, 't',   3,    true,  3,     249,   78,   3 ]],
+                    [[[6,3,52,24,25,52,26,74],[57,true,48,false,'h',6,29,0.0],[57,true,48,false,'h',6,29,0.0],[6,3,52,24,25,52,26,74],[57,true,48,false,'h',6,29,0.0],[6,3,52,24,25,52,26,74],[57,true,48,false,'h',6,29,0.0],[57,true,48,false,'h',6,29,0.0]],[ 6,   3,     52,    24,   25,   52,   26,    74,
+                        0,   0,     74,    0,    74,   0,    0,     29,
+                        6,   'h',   false, 48,   true, 57,   57,    6,
+                        57,  6,     57,    57,   true, 48,   false, 'h',
+                        6,   29,    29,    26,   29,   26,   29,    6,
+                        'h', false, 48,    true, 3,    true, 3,     true,
+                        48,  false, 'h',   6,    52,   6,    52,    25,
+                        24,  52,    48,    52,   24,   25,   'h',   false
+                      ]]
+    ],
+        "level": 1
+    },
 ] 
 
 module.exports = kata;

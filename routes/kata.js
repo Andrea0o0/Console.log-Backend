@@ -52,4 +52,17 @@ router.post('/', isAdmin, async (req, res, next) => {
   }
 });
 
+// @desc    Delete one kata
+// @route   DELETE /kata/:kataId
+// @access  Admin
+router.delete('/:kataId', isAdmin, async (req, res, next) => {
+  const { kataId } = req.params
+  try {
+      const deletekata = await Kata.findByIdAndDelete(kataId)
+      res.status(201).json(deleteKata)
+  } catch (error) {
+      next(error)
+  }
+});
+
 module.exports = router;

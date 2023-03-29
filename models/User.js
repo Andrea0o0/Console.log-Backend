@@ -13,7 +13,9 @@ const userSchema = new Schema({
   },
   username: {
     type: String,
-    required: true
+    trim: true,
+    required: [true, "Username is required."],
+    unique: true,
   },
   role: {
     type: String,

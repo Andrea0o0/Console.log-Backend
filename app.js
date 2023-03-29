@@ -9,6 +9,8 @@ const cors = require('cors');
 const indexRouter = require('./routes');
 const authRouter = require('./routes/auth');
 const kataRouter = require('./routes/kata');
+const solutionsRouter = require('./routes/solutions');
+const championRouter = require('./routes/champions')
 
 const app = express();
 
@@ -26,6 +28,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/kata', kataRouter);
+app.use('/solutions',solutionsRouter)
+app.use('/champion', championRouter)
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
