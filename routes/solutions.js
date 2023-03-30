@@ -63,7 +63,7 @@ router.put('/:solutionId', isAuthenticated, async (req, res, next) => {
 });
 
 // @desc    Create one solution
-// @route   POST /solution
+// @route   POST /solutions
 // @access  Private
 router.post('/', isAuthenticated, async (req, res, next) => {
   try {

@@ -3,7 +3,7 @@ const Like = require('../models/Like')
 const { isAuthenticated, isAdmin } = require('../middlewares/jwt');
 
 // @desc    Get all likes from KATA
-// @route   GET /like/kata/:kataId
+// @route   GET /likes/kata/:kataId
 // @access  Private
 router.get('/kata/:kataId', isAuthenticated, async (req, res, next) => {
     const { kataId } = req.params
@@ -16,7 +16,7 @@ router.get('/kata/:kataId', isAuthenticated, async (req, res, next) => {
 });
 
 // @desc    Get all likes from SOLUTION
-// @route   GET /like/solution/:solutionId
+// @route   GET /likes/solution/:solutionId
 // @access  Private
 router.get('/solution/:solutionId', isAuthenticated, async (req, res, next) => {
     const { solutionId } = req.params
@@ -29,13 +29,13 @@ router.get('/solution/:solutionId', isAuthenticated, async (req, res, next) => {
 });
 
 // @desc    Create one like KATA/SOLUTION
-// @route   POST /like
+// @route   POST /likes
 // @access  Private
 router.post('/', isAuthenticated, async (req, res, next) => {
   try {
       const { _id:user_id } = req.payload
       const like_created = await Like.create(req.body)
-      const newLike = await Like.findByIdAndUpdate(like_created._id,{user:user_id},{new:true})
+      const newLike = await Like.findByIdAndUpdate(like_created._id,{user:user_id},{new:true}).populate("user")
 
       res.status(201).json(newLike)
   } catch (error) {
@@ -44,7 +44,7 @@ router.post('/', isAuthenticated, async (req, res, next) => {
 });
 
 // @desc    Delete one like
-// @route   DELETE /like/:likeId
+// @route   DELETE /likes/:likeId
 // @access  Admin
 router.delete('/:likeId', isAuthenticated, isAdmin, async (req, res, next) => {
   const { likeId } = req.params

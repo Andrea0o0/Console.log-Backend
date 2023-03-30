@@ -35,7 +35,7 @@ router.post('/', isAuthenticated, async (req, res, next) => {
   try {
       const { _id:user_id } = req.payload
       const comments_created = await Comment.create(req.body)
-      const newComment = await Comment.findByIdAndUpdate(comments_created._id,{user:user_id},{new:true})
+      const newComment = await Comment.findByIdAndUpdate(comments_created._id,{user:user_id},{new:true}).populate("user")
 
       res.status(201).json(newComment)
   } catch (error) {
