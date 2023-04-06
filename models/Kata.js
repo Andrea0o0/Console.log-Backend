@@ -17,7 +17,10 @@ const kataSchema = new Schema({
     type: String,
     required: true
   },
-  example: Array,
+  example: {
+    type: Array,
+    default:[]
+  },
   output: {
     type: Array,
     required: true
@@ -32,3 +35,8 @@ const kataSchema = new Schema({
   });
 
 module.exports = model("Kata", kataSchema);
+
+
+
+
+

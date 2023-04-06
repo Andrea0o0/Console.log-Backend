@@ -12,7 +12,7 @@ const kataRouter = require('./routes/kata');
 const solutionsRouter = require('./routes/solutions');
 const likesRouter = require('./routes/likes');
 const commentsRouter = require('./routes/comments');
-const championRouter = require('./routes/champions')
+const championsRouter = require('./routes/champions')
 
 const app = express();
 
@@ -33,7 +33,7 @@ app.use('/kata', kataRouter);
 app.use('/solutions',solutionsRouter)
 app.use('/likes', likesRouter)
 app.use('/comments', commentsRouter)
-app.use('/champion', championRouter)
+app.use('/champions', championsRouter)
 
 
 // catch 404 and forward to error handler

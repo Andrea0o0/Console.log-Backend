@@ -6,41 +6,26 @@ const championsSchema = new Schema({
     type: String,
     require:true
   },
-  users: [
-    {
+  users: [{
     type: Schema.Types.ObjectId,
     ref: "User",
-    }
-  ],
+    }],
+  users_request: [{
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  }],
   number_players: {
     type: Number,
-    enum: [2,3,4]
+    enum: [1,2,3,4]
   },
-  classification: {
-    first:
-        {
-            type: Schema.Types.ObjectId,
-            ref: "User",
-        },
-    second:
-        {
-            type: Schema.Types.ObjectId,
-            ref: "User",
-        },
-    third:
-        {
-            type: Schema.Types.ObjectId,
-            ref: "User",
-        },
-    fourth:
-        {
-            type: Schema.Types.ObjectId,
-            ref: "User",
-        },
-  },
-  completed:{
-    type: Boolean,
-    default:false
+  classification: [{
+    type: Schema.Types.ObjectId,
+    ref: "User"
+    }],
+  status:{
+    type: String,
+    enum: ['REQUEST','START','REFUSED','EQUAL','FINISHED'],
+    default:'REQUEST'
   }
 },
   {
@@ -48,3 +33,5 @@ const championsSchema = new Schema({
   });
 
 module.exports = model("Champions", championsSchema);
+
+

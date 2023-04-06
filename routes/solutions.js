@@ -19,6 +19,20 @@ router.get('/user', isAuthenticated, async (req, res, next) => {;
   }
 });
 
+// @desc    Get all solutions by USER & KATA
+// @route   GET /solutions/user
+// @access  Private
+router.get('/user/:kataId', isAuthenticated, async (req, res, next) => {;
+  const { kataId } = req.params
+  try {
+    const { _id:user_id } = req.payload
+    const solutions = await Solution.find({user:user_id,status:true,kata:kataId})
+    res.status(200).json(solutions)
+  } catch (error) {
+    next(error)
+  }
+});
+
 // @desc    Get all solutions by KATA
 // @route   GET /solutions/kata/:kataId
 // @access  Private
