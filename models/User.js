@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 
 const userSchema = new Schema({
+  image:{
+    type:String,
+    default:'default'
+  },
   email: {
     type: String,
     unique: true,

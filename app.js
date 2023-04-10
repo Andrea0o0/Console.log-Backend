@@ -4,6 +4,7 @@ const createError = require('http-errors');
 const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
+const { Octokit, App } = require("octokit");
 
 // Routers require
 const indexRouter = require('./routes');
@@ -22,6 +23,45 @@ app.use(cors({
 }));
 app.set('trust proxy', 1);
 
+//GITHUB
+const bodyParser = require('body-parser')
+
+app.use(bodyParser.json())
+
+
+// app.get('/getAccessToken',async function (req,res) {
+//   req.query.code
+//   console.log('hi')
+//   const params = `?client_id=${process.env.CLIENT_ID_GITHUB}&client_secret=${process.env.CLIENT_ID_GITHUB_SECRET}&code=${req.query.code}`
+
+//   await fetch(`https://github.com/login/oauth/access_token${params}`,{
+//     method:"POST",
+//     headers: {
+//       "Accept":"application/json"
+//     }
+// }).then((response) => {
+//   return response.json()
+// }).then((data) => {
+//   console.log(data,'in')
+//   res.json(data)
+// })
+// })
+
+// app.get('/getUserData', async function(req,res){
+//   const octokit = new Octokit({
+//     auth: req.get("Authorization")
+//   })
+  
+//   await octokit.request('GET /user', {
+//     headers: {
+//       'X-GitHub-Api-Version': '2022-11-28'
+//     }
+//   }).then(({data}) => {
+//     console.log(data)
+//     res.json(data)
+//   })
+// })
+//
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

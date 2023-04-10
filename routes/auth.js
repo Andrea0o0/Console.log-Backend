@@ -2,7 +2,9 @@ const router = require('express').Router();
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
+const { Octokit, App } = require("octokit");
 const { isAuthenticated, isAdmin } = require('../middlewares/jwt');
+const fetch = (...args) => import('node-fetch').then(({default:fetch}) => fetch(...args))
 const saltRounds = 10;
 
 // @desc    SIGN UP new user
@@ -29,8 +31,12 @@ router.post('/signup', async (req, res, next) => {
   }
   try {
     const userInDB = await User.findOne({ email });
+    const usernameInDB = await User.findOne({ username });
     if (userInDB) {
       res.status(400).json({ message: `User already exists with email ${email}` })
+      return;
+    } else if (usernameInDB) {
+      res.status(400).json({ message: `User already exists with username ${username}` })
       return;
     } else {
       const salt = bcrypt.genSaltSync(saltRounds);
@@ -43,11 +49,11 @@ router.post('/signup', async (req, res, next) => {
   }
 });
 
+
 // @desc    LOG IN user
 // @route   POST /api/v1/auth/login
 // @access  Public
 router.post('/login', async (req, res, next) => { 
-  console.log(req.headers);
   const { email, password } = req.body;
   // Check if email or password are provided as empty string 
   if (email === "" || password === "") {
@@ -87,6 +93,112 @@ router.post('/login', async (req, res, next) => {
     next(error)
   }
 });
+
+// @desc    LOG IN user with GitHub
+// @route   POST /api/v1/auth/login/github/:githubId
+// @access  Public
+router.get('/github/:githubId',async function (req,res,next) {
+  const { githubId } = req.params
+  const params = `?client_id=${process.env.CLIENT_ID_GITHUB}&client_secret=${process.env.CLIENT_ID_GITHUB_SECRET}&code=${githubId}`
+
+  try {
+    const newFetch = await fetch(`https://github.com/login/oauth/access_token${params}`,{
+    method:"POST",
+    headers: {
+      "Accept":"application/json"
+    }
+    }) 
+       const fetchjson = await newFetch.json()
+       const octokit = await new Octokit({
+      auth: fetchjson.access_token
+    })
+    const response_octokit = await octokit.request('GET /user', {
+      headers: {
+        'X-GitHub-Api-Version': '2022-11-28'
+      }
+    }) 
+      const data = response_octokit.data
+
+      const image = data.avatar_url
+      let username = data.login
+      const email = `github${Math.floor(Math.random()*10000)+10000}@gmail.com`
+      const password = `Github_${Math.floor(Math.random()*10000)+10000}`
+      const userInDB = await User.findOne({ image });
+      const usernameInDB = await User.findOne({username});
+    if (userInDB) {
+        // Let's create what we want to store in the jwt token
+        const payload = {
+          email: userInDB.email,
+          username: userInDB.username,
+          role: userInDB.role,
+          _id: userInDB._id
+        }
+        // Use the jwt middleware to create de token
+        const authToken = jwt.sign(
+          payload,
+          process.env.TOKEN_SECRET,
+          { algorithm: 'HS256', expiresIn: "30d" }
+        );
+        res.status(200).json({ authToken: authToken })
+      return;
+    } else if(usernameInDB){
+      username += `_${Math.floor(Math.random()*10000)+10000}`
+    }
+
+      const salt = bcrypt.genSaltSync(saltRounds);
+      const hashedPassword = bcrypt.hashSync(password, salt);
+      const newUser = await User.create({ email, hashedPassword, username,image});
+      res.status(201).json({ data: newUser });
+    
+  } catch (error) {
+    next(error)
+  } 
+})
+
+// @desc    LOG IN user with Google
+// @route   POST /api/v1/auth/login/google/:githubId
+// @access  Public
+router.post('/google',async function (req,res,next) {
+  const { email, username, image } = req.body;
+
+  const password = `Github_${Math.floor(Math.random()*10000)+10000}`
+
+  try {
+      const userInDB = await User.findOne({ email });
+      const usernameInDB = await User.findOne({username});
+      console.log(userInDB)
+    if (userInDB) {
+        // Let's create what we want to store in the jwt token
+        const payload = {
+          email: userInDB.email,
+          username: userInDB.username,
+          role: userInDB.role,
+          _id: userInDB._id
+        }
+        // Use the jwt middleware to create de token
+        const authToken = jwt.sign(
+          payload,
+          process.env.TOKEN_SECRET,
+          { algorithm: 'HS256', expiresIn: "30d" }
+        );
+        console.log('login')
+        res.status(200).json({ authToken: authToken })
+      return;
+    } else if(usernameInDB){
+      console.log('username exist')
+      username += `_${Math.floor(Math.random()*10000)+10000}`
+    }
+
+      const salt = bcrypt.genSaltSync(saltRounds);
+      const hashedPassword = bcrypt.hashSync(password, salt);
+      const newUser = await User.create({ email, hashedPassword, username,image});
+      console.log('user_create',newUser)
+      res.status(201).json({ data: newUser });
+    
+  } catch (error) {
+    next(error)
+  } 
+})
 
 // @desc    GET logged in user
 // @route   GET /api/v1/auth/me
