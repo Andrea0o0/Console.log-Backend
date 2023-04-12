@@ -75,7 +75,8 @@ router.post('/login', async (req, res, next) => {
           email: userInDB.email,
           username: userInDB.username,
           role: userInDB.role,
-          _id: userInDB._id
+          _id: userInDB._id,
+          image:userInDB.image
         }
         // Use the jwt middleware to create de token
         const authToken = jwt.sign(
@@ -131,7 +132,8 @@ router.get('/github/:githubId',async function (req,res,next) {
           email: userInDB.email,
           username: userInDB.username,
           role: userInDB.role,
-          _id: userInDB._id
+          _id: userInDB._id,
+          image:userInDB.image
         }
         // Use the jwt middleware to create de token
         const authToken = jwt.sign(
@@ -139,16 +141,32 @@ router.get('/github/:githubId',async function (req,res,next) {
           process.env.TOKEN_SECRET,
           { algorithm: 'HS256', expiresIn: "30d" }
         );
+        console.log('in login')
         res.status(200).json({ authToken: authToken })
       return;
-    } else if(usernameInDB){
-      username += `_${Math.floor(Math.random()*10000)+10000}`
-    }
+    } else{
+      username += usernameInDB ? `_${Math.floor(Math.random()*10000)+10000}`:''
+    
 
       const salt = bcrypt.genSaltSync(saltRounds);
       const hashedPassword = bcrypt.hashSync(password, salt);
       const newUser = await User.create({ email, hashedPassword, username,image});
-      res.status(201).json({ data: newUser });
+      const payload = {
+        email: newUser.email,
+        username: newUser.username,
+        role: newUser.role,
+        _id: newUser._id,
+        image:newUser.image
+      }
+      // Use the jwt middleware to create de token
+      const authToken = jwt.sign(
+        payload,
+        process.env.TOKEN_SECRET,
+        { algorithm: 'HS256', expiresIn: "30d" }
+      );
+      console.log('in username')
+      res.status(200).json({ authToken: authToken })
+    }
     
   } catch (error) {
     next(error)
@@ -166,14 +184,14 @@ router.post('/google',async function (req,res,next) {
   try {
       const userInDB = await User.findOne({ email });
       const usernameInDB = await User.findOne({username});
-      console.log(userInDB)
     if (userInDB) {
         // Let's create what we want to store in the jwt token
         const payload = {
           email: userInDB.email,
           username: userInDB.username,
           role: userInDB.role,
-          _id: userInDB._id
+          _id: userInDB._id,
+          image:userInDB.image
         }
         // Use the jwt middleware to create de token
         const authToken = jwt.sign(
@@ -181,24 +199,79 @@ router.post('/google',async function (req,res,next) {
           process.env.TOKEN_SECRET,
           { algorithm: 'HS256', expiresIn: "30d" }
         );
-        console.log('login')
         res.status(200).json({ authToken: authToken })
       return;
     } else if(usernameInDB){
-      console.log('username exist')
       username += `_${Math.floor(Math.random()*10000)+10000}`
     }
 
       const salt = bcrypt.genSaltSync(saltRounds);
       const hashedPassword = bcrypt.hashSync(password, salt);
       const newUser = await User.create({ email, hashedPassword, username,image});
-      console.log('user_create',newUser)
-      res.status(201).json({ data: newUser });
+      const payload = {
+        email: newUser.email,
+        username: newUser.username,
+        role: newUser.role,
+        _id: newUser._id,
+        image:newUser.image
+      }
+      // Use the jwt middleware to create de token
+      const authToken = jwt.sign(
+        payload,
+        process.env.TOKEN_SECRET,
+        { algorithm: 'HS256', expiresIn: "30d" }
+      );
+      res.status(200).json({ authToken: authToken })
     
   } catch (error) {
     next(error)
   } 
 })
+
+
+// @desc    Edit Image
+// @route   PUT /api/v1/auth/me
+// @access  Private
+router.post('/imageusername', isAuthenticated, async (req, res, next) => {
+  console.log(req.payload)
+  const { _id:user_id } = req.payload
+  
+  try {
+      const finduser = await User.findById(user_id)
+      console.log(finduser,'in')
+      const editUser = await User.findByIdAndUpdate(finduser._id,req.body,{new:true})
+      req.payload.image = editUser.image
+      const payload = {
+        email: editUser.email,
+        username: editUser.username,
+        role: editUser.role,
+        _id: editUser._id,
+        image:editUser.image
+      }
+      // Use the jwt middleware to create de token
+      const authToken = jwt.sign(
+        payload,
+        process.env.TOKEN_SECRET,
+        { algorithm: 'HS256', expiresIn: "30d" }
+      );
+      res.status(200).json({ authToken: authToken,user:editUser})
+  } catch (error) {
+      next(error)
+  }
+});
+
+// @desc    GET user
+// @route   GET /api/v1/auth/me
+// @access  Private
+router.get('/userinfo', isAuthenticated, async (req, res, next) => {
+  try {
+      const userfind = await User.findById(req.payload._id)
+      console.log(userfind, 'userfind')
+      res.status(200).json(userfind)
+  } catch (error) {
+      next(error)
+  }
+});
 
 // @desc    GET logged in user
 // @route   GET /api/v1/auth/me
@@ -211,5 +284,8 @@ router.get('/me', isAuthenticated, (req, res, next) => {
   // previously set as the token payload
   res.status(200).json(req.payload);
 })
+
+
+
 
 module.exports = router;

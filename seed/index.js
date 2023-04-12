@@ -11,6 +11,7 @@ mongoose.connect(process.env.MONGO_URL)
   // .then(() => User.deleteMany({}))
   .then(() => Kata.deleteMany({}))
   .then(() => Solution.deleteMany({}))
+  .then(() => User.deleteMany({}))
   .then(() => console.log('Deleted all data'))
   .then(() => Kata.create(kata))
   .then(() => {
