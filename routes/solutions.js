@@ -9,10 +9,11 @@ router.get('/user', isAuthenticated, async (req, res, next) => {;
   try {
     const solutions = {}
     const { _id:user_id } = req.payload
-    const solutions_completed = await Solution.find({user:user_id,status:true})
-    const solutions_Incompleted = await Solution.find({user:user_id,status:true})
+    const solutions_completed = await Solution.find({user:user_id,status:true}).populate('kata')
+    const solutions_Incompleted = await Solution.find({user:user_id,status:false}).populate('kata')
     solutions.true = solutions_completed
     solutions.false = solutions_Incompleted
+    console.log(solutions)
     res.status(200).json(solutions)
   } catch (error) {
     next(error)
@@ -39,7 +40,7 @@ router.get('/user/:kataId', isAuthenticated, async (req, res, next) => {;
 router.get('/kata/:kataId', isAuthenticated, async (req, res, next) => {;
   const { kataId } = req.params
   try {
-    const solutions_KATA = await Solution.find({kata:kataId,status:true})
+    const solutions_KATA = await Solution.find({kata:kataId,status:true}).populate('user')
     res.status(200).json(solutions_KATA)
   } catch (error) {
     next(error)
