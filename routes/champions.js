@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Champions = require('../models/Champions');
 const User = require('../models/User')
+const jwt = require("jsonwebtoken");
 const { isAuthenticated, isAdmin } = require('../middlewares/jwt');
 
 // @desc    Get all champions by USER
@@ -9,7 +10,7 @@ const { isAuthenticated, isAdmin } = require('../middlewares/jwt');
 router.get('/', isAuthenticated, async (req, res, next) => {;
   try {
     const { _id:user_id } = req.payload
-    const champions = await Champions.find({users: { $in:[user_id] }})
+    // const champions = await Champions.find({users: { $in:[user_id] }})
     res.status(200).json(champions)
   } catch (error) {
     next(error)
@@ -29,6 +30,16 @@ router.get('/:championId', async (req, res, next) => {
   }
 });
 
+router.get('/status/request', isAuthenticated, async (req, res, next) => {
+  try {
+      const champion = await Champions.find({status:'REQUEST'})
+      res.status(200).json(champion)
+  } catch (error) {
+      next(error)
+  }
+});
+
+
 // @desc    Edit one champion USER_REQUEST
 // @route   PUT /champions/user-request/:championId
 // @access  Admin
@@ -38,7 +49,7 @@ router.put('/user-request/:championId', isAuthenticated, async (req, res, next) 
   try {
       const champions = await Champions.findById(championId)
       const editChampions = await Champions.findByIdAndUpdate(championId, { $push :{users: user_id},number_players:champions.number_players+1}, { new: true})
-      
+      res.redirect(`/champions/${championId}`)
       res.status(204).json(editChampions)
   } catch (error) {
       next(error)
@@ -52,7 +63,7 @@ router.put('/status/:championId', isAuthenticated, async (req, res, next) => {
   const { championId } = req.params
   try {
       const editChampions = await Champions.findByIdAndUpdate(championId,req.body)
-      
+      res.redirect(`/champions/${championId}`)
       res.status(204).json(editChampions)
   } catch (error) {
       next(error)
@@ -76,23 +87,30 @@ const { championId } = req.params
 
 // @desc    Create one champion
 // @route   POST /champions
-// @access  Admin
+// @access  Private
 router.post('/', isAuthenticated, async (req, res, next) => {
-  const { users_request, namefight,status } = req.body
+  const { users_request, namefight,status, kata } = req.body
   const { _id:user_id } = req.payload
   try {
-      const dif = 4 - users_request.length 
-      for(let i=0;i<dif;i++){
-        users_request.push('')
+      users_request.push(user_id)
+      const newChampions = await Champions.create({namefight:namefight, users_request: users_request,status:status,number_players:1, kata:kata})
+      const userInDB = await User.findById(user_id) 
+      req.payload.request = true
+      const payload = {
+        email: userInDB.email,
+        username: userInDB.username,
+        role: userInDB.role,
+        _id: userInDB._id,
+        image:userInDB.image,
+        request:true
       }
-      console.log(users_request)
-      const user = await User.find({$or:[{username:users_request[0]},{username:users_request[1]},{username:users_request[2]},
-        {username:users_request[3]}]})
-      
-      const idUsers = user.map(elem => elem._id)
-
-      const newChampions = await Champions.create({ users: [user_id],namefight:namefight, users_request: idUsers,status:status,number_players:1})
-      res.status(201).json(newChampions)
+      // Use the jwt middleware to create de token
+      const authToken = jwt.sign(
+        payload,
+        process.env.TOKEN_SECRET,
+        { algorithm: 'HS256', expiresIn: "30d" }
+      );
+      res.status(200).json({ authToken: authToken,champions:newChampions})
   } catch (error) {
       next(error)
   }
@@ -101,7 +119,7 @@ router.post('/', isAuthenticated, async (req, res, next) => {
 // @desc    Delete one champion
 // @route   DELETE /champion/:championId
 // @access  Admin
-router.delete('/:championId', isAdmin, async (req, res, next) => {
+router.delete('/:championId',isAuthenticated, isAdmin, async (req, res, next) => {
   const { championId } = req.params
   try {
       const deletechampion = await Champions.findByIdAndDelete(championId)

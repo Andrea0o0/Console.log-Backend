@@ -178,12 +178,13 @@ router.get('/github/:githubId',async function (req,res,next) {
 // @access  Public
 router.post('/google',async function (req,res,next) {
   const { email, username, image } = req.body;
-
+  let newusername = username.slice(0)
   const password = `Github_${Math.floor(Math.random()*10000)+10000}`
 
   try {
       const userInDB = await User.findOne({ email });
       const usernameInDB = await User.findOne({username});
+      
     if (userInDB) {
         // Let's create what we want to store in the jwt token
         const payload = {
@@ -201,13 +202,14 @@ router.post('/google',async function (req,res,next) {
         );
         res.status(200).json({ authToken: authToken })
       return;
-    } else if(usernameInDB){
-      username += `_${Math.floor(Math.random()*10000)+10000}`
-    }
+    } 
 
+    if(usernameInDB){
+      newusername += `_${Math.floor(Math.random()*10000)+10000}`
+    }
       const salt = bcrypt.genSaltSync(saltRounds);
       const hashedPassword = bcrypt.hashSync(password, salt);
-      const newUser = await User.create({ email, hashedPassword, username,image});
+      const newUser = await User.create({ email, hashedPassword, username:newusername,image});
       const payload = {
         email: newUser.email,
         username: newUser.username,
@@ -268,6 +270,18 @@ router.get('/userinfo', isAuthenticated, async (req, res, next) => {
       const userfind = await User.findById(req.payload._id)
       console.log(userfind, 'userfind')
       res.status(200).json(userfind)
+  } catch (error) {
+      next(error)
+  }
+});
+
+// @desc    GET all users
+// @route   GET /api/v1/auth/me
+// @access  Private
+router.get('/users', isAuthenticated, async (req, res, next) => {
+  try {
+      const users = await User.find({})
+      res.status(200).json(users)
   } catch (error) {
       next(error)
   }

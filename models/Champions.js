@@ -6,6 +6,10 @@ const championsSchema = new Schema({
     type: String,
     require:true
   },
+  kata: {
+    type: Schema.Types.ObjectId,
+    ref: "Kata",
+  },
   users: [{
     type: Schema.Types.ObjectId,
     ref: "User",
