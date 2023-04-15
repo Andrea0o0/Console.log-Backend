@@ -76,7 +76,8 @@ router.post('/login', async (req, res, next) => {
           username: userInDB.username,
           role: userInDB.role,
           _id: userInDB._id,
-          image:userInDB.image
+          image:userInDB.image,
+          request:false
         }
         // Use the jwt middleware to create de token
         const authToken = jwt.sign(
@@ -122,9 +123,9 @@ router.get('/github/:githubId',async function (req,res,next) {
 
       const image = data.avatar_url
       let username = data.login
-      const email = `github${Math.floor(Math.random()*10000)+10000}@gmail.com`
+      const email = data.avatar_url
       const password = `Github_${Math.floor(Math.random()*10000)+10000}`
-      const userInDB = await User.findOne({ image });
+      const userInDB = await User.findOne({ email });
       const usernameInDB = await User.findOne({username});
     if (userInDB) {
         // Let's create what we want to store in the jwt token
@@ -133,7 +134,8 @@ router.get('/github/:githubId',async function (req,res,next) {
           username: userInDB.username,
           role: userInDB.role,
           _id: userInDB._id,
-          image:userInDB.image
+          image:userInDB.image,
+          request:false
         }
         // Use the jwt middleware to create de token
         const authToken = jwt.sign(
@@ -141,7 +143,6 @@ router.get('/github/:githubId',async function (req,res,next) {
           process.env.TOKEN_SECRET,
           { algorithm: 'HS256', expiresIn: "30d" }
         );
-        console.log('in login')
         res.status(200).json({ authToken: authToken })
       return;
     } else{
@@ -156,7 +157,8 @@ router.get('/github/:githubId',async function (req,res,next) {
         username: newUser.username,
         role: newUser.role,
         _id: newUser._id,
-        image:newUser.image
+        image:newUser.image,
+        request:false
       }
       // Use the jwt middleware to create de token
       const authToken = jwt.sign(
@@ -164,7 +166,6 @@ router.get('/github/:githubId',async function (req,res,next) {
         process.env.TOKEN_SECRET,
         { algorithm: 'HS256', expiresIn: "30d" }
       );
-      console.log('in username')
       res.status(200).json({ authToken: authToken })
     }
     
@@ -192,7 +193,8 @@ router.post('/google',async function (req,res,next) {
           username: userInDB.username,
           role: userInDB.role,
           _id: userInDB._id,
-          image:userInDB.image
+          image:userInDB.image,
+          request:false
         }
         // Use the jwt middleware to create de token
         const authToken = jwt.sign(
@@ -215,7 +217,8 @@ router.post('/google',async function (req,res,next) {
         username: newUser.username,
         role: newUser.role,
         _id: newUser._id,
-        image:newUser.image
+        image:newUser.image,
+        request:false
       }
       // Use the jwt middleware to create de token
       const authToken = jwt.sign(
@@ -235,12 +238,10 @@ router.post('/google',async function (req,res,next) {
 // @route   PUT /api/v1/auth/me
 // @access  Private
 router.post('/imageusername', isAuthenticated, async (req, res, next) => {
-  console.log(req.payload)
   const { _id:user_id } = req.payload
   
   try {
       const finduser = await User.findById(user_id)
-      console.log(finduser,'in')
       const editUser = await User.findByIdAndUpdate(finduser._id,req.body,{new:true})
       req.payload.image = editUser.image
       const payload = {
@@ -248,7 +249,8 @@ router.post('/imageusername', isAuthenticated, async (req, res, next) => {
         username: editUser.username,
         role: editUser.role,
         _id: editUser._id,
-        image:editUser.image
+        image:editUser.image,
+        request:false
       }
       // Use the jwt middleware to create de token
       const authToken = jwt.sign(
@@ -268,7 +270,6 @@ router.post('/imageusername', isAuthenticated, async (req, res, next) => {
 router.get('/userinfo', isAuthenticated, async (req, res, next) => {
   try {
       const userfind = await User.findById(req.payload._id)
-      console.log(userfind, 'userfind')
       res.status(200).json(userfind)
   } catch (error) {
       next(error)
@@ -293,7 +294,7 @@ router.get('/users', isAuthenticated, async (req, res, next) => {
 router.get('/me', isAuthenticated, (req, res, next) => {
   // If JWT token is valid the payload gets decoded by the
   // isAuthenticated middleware and made available on `req.payload`
-  console.log('Whose token is on the request:', req.payload);
+  // console.log('Whose token is on the request:', req.payload);
   // Send back the object with user data
   // previously set as the token payload
   res.status(200).json(req.payload);

@@ -18,18 +18,17 @@ const championsSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   }],
-  number_players: {
-    type: Number,
-    enum: [1,2,3,4]
+  function: {
+    type:String
   },
-  classification: [{
-    type: Schema.Types.ObjectId,
-    ref: "User"
-    }],
   status:{
     type: String,
     enum: ['REQUEST','START','REFUSED','EQUAL','FINISHED'],
     default:'REQUEST'
+  },
+  time:{
+    type:Number,
+    default:30
   }
 },
   {

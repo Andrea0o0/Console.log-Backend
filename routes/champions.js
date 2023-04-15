@@ -17,23 +17,44 @@ router.get('/', isAuthenticated, async (req, res, next) => {;
   }
 });
 
-// @desc    Get one champion
-// @route   GET /champion/:championId
-// @access  Public
-router.get('/:championId', async (req, res, next) => {
-  const { championId } = req.params
+// @desc    Get one champions by USER
+// @route   GET /champion
+// @access  Private
+router.get('/:championsId', isAuthenticated, async (req, res, next) => {;
   try {
-      const champion = await Champions.findById(championId)
-      res.status(200).json(champion)
+    const { championId } = req.params
+    const champions = await Champions.findById(championId).populate('users')
+    res.status(200).json(champions)
   } catch (error) {
-      next(error)
+    next(error)
   }
 });
 
-router.get('/status/request', isAuthenticated, async (req, res, next) => {
+// @desc    Test request
+// @route   GET /champions/interval/request
+// @access  Private
+router.get('/interval/request', isAuthenticated, async (req, res, next) => {;
   try {
-      const champion = await Champions.find({status:'REQUEST'})
-      res.status(200).json(champion)
+    const { _id:user_id } = req.payload
+    const championsRequest = await Champions.find({users_request: user_id,status:'REQUEST'})
+    res.status(200).json(championsRequest)
+  } catch (error) {
+    next(error)
+  }
+});
+
+
+router.get('/status/:typeStatus', isAuthenticated, async (req, res, next) => {
+  const { typeStatus } = req.params
+  const { _id:user_id } = req.payload
+  try {
+    if(typeStatus === 'REQUEST'){
+      const championsRequest = await Champions.find({status:typeStatus,users_request:user_id}).populate('users_request').populate('kata')
+      res.status(200).json(championsRequest)
+    } else if(typeStatus === 'START'){
+      const championsStart = await Champions.find({status:typeStatus,users_request:user_id}).populate('users').populate('kata')
+      res.status(200).json(championsStart)
+    }
   } catch (error) {
       next(error)
   }
@@ -47,9 +68,21 @@ router.put('/user-request/:championId', isAuthenticated, async (req, res, next) 
   const { championId } = req.params
   const { _id:user_id } = req.payload
   try {
-      const champions = await Champions.findById(championId)
-      const editChampions = await Champions.findByIdAndUpdate(championId, { $push :{users: user_id},number_players:champions.number_players+1}, { new: true})
-      res.redirect(`/champions/${championId}`)
+      const editChampions = await Champions.findByIdAndUpdate(championId, { $push :{users: user_id }}, { new: true})
+      console.log(editChampions)
+      res.status(204).json(editChampions)
+  } catch (error) {
+      next(error)
+  }
+});
+
+// @desc    Edit one champion USER_REQUEST
+// @route   PUT /champions/user-request/:championId
+// @access  Admin
+router.put('/time/:championId', isAuthenticated, async (req, res, next) => {
+  const { championId } = req.params
+  try {
+      const editChampions = await Champions.findByIdAndUpdate(championId, {time:req.body.time}, { new: true})
       res.status(204).json(editChampions)
   } catch (error) {
       next(error)
@@ -60,6 +93,7 @@ router.put('/user-request/:championId', isAuthenticated, async (req, res, next) 
 // @route   PUT /champions/status/:championId
 // @access  Private
 router.put('/status/:championId', isAuthenticated, async (req, res, next) => {
+  
   const { championId } = req.params
   try {
       const editChampions = await Champions.findByIdAndUpdate(championId,req.body)
@@ -93,7 +127,7 @@ router.post('/', isAuthenticated, async (req, res, next) => {
   const { _id:user_id } = req.payload
   try {
       users_request.push(user_id)
-      const newChampions = await Champions.create({namefight:namefight, users_request: users_request,status:status,number_players:1, kata:kata})
+      const newChampions = await Champions.create({namefight:namefight, users_request: users_request,status:status,number_players:1, kata:kata,users:[user_id]})
       const userInDB = await User.findById(user_id) 
       req.payload.request = true
       const payload = {
@@ -119,7 +153,7 @@ router.post('/', isAuthenticated, async (req, res, next) => {
 // @desc    Delete one champion
 // @route   DELETE /champion/:championId
 // @access  Admin
-router.delete('/:championId',isAuthenticated, isAdmin, async (req, res, next) => {
+router.delete('/:championId',isAuthenticated, async (req, res, next) => {
   const { championId } = req.params
   try {
       const deletechampion = await Champions.findByIdAndDelete(championId)

@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const Solution = require('../models/Solution')
 const Kata = require('../models/Kata')
 const User = require('../models/User')
+const Comment = require('../models/Comment')
+const Champions = require('../models/Champions')
 const kata = require('./data/kata')
 
 mongoose.connect(process.env.MONGO_URL)
@@ -12,6 +14,8 @@ mongoose.connect(process.env.MONGO_URL)
   .then(() => Kata.deleteMany({}))
   .then(() => Solution.deleteMany({}))
   .then(() => User.deleteMany({}))
+  .then(() => Champions.deleteMany({}))
+  .then(() => Comment.deleteMany({}))
   .then(() => console.log('Deleted all data'))
   .then(() => Kata.create(kata))
   .then(() => {
