@@ -28,7 +28,7 @@ const championsSchema = new Schema({
   },
   time:{
     type:Number,
-    default:30
+    default:60
   }
 },
   {
