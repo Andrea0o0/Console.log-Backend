@@ -13,7 +13,6 @@ router.get('/user', isAuthenticated, async (req, res, next) => {;
     const solutions_Incompleted = await Solution.find({user:user_id,status:false}).populate('kata')
     solutions.true = solutions_completed
     solutions.false = solutions_Incompleted
-    console.log(solutions)
     res.status(200).json(solutions)
   } catch (error) {
     next(error)
@@ -69,7 +68,6 @@ router.put('/:solutionId', isAuthenticated, async (req, res, next) => {
   const { solutionId } = req.params
   try {
       const editSolution = await Solution.findByIdAndUpdate(solutionId, req.body, { new: true})
-      console.log(editSolution)
       const hello = 'hello'
       res.status(204).json(hello)
   } catch (error) {
@@ -97,7 +95,6 @@ router.post('/', isAuthenticated, async (req, res, next) => {
 router.delete('/:solutionId', isAuthenticated, isAdmin, async (req, res, next) => {
   const { solutionId } = req.params
   try {
-      console.log(solutionId)
       const deleteSolution = await Solution.findByIdAndDelete(solutionId)
       res.status(201).json(deleteSolution)
   } catch (error) {

@@ -9,7 +9,6 @@ router.get('/kata/:kataId', isAuthenticated, async (req, res, next) => {
     const { kataId } = req.params
   try {
     const commentss_kata = await Comment.find(({kata:kataId})).populate('user')
-    console.log(commentss_kata)
     res.status(200).json(commentss_kata)
   } catch (error) {
     next(error)
@@ -37,7 +36,6 @@ router.post('/', isAuthenticated, async (req, res, next) => {
       const { _id:user_id } = req.payload
       const comments_created = await Comment.create(req.body)
       const newComment = await Comment.findByIdAndUpdate(comments_created._id,{user:user_id},{new:true}).populate("user")
-      console.log(newComment)
       const commentss_kata = await Comment.find(({kata:req.body.kata})).populate('user')
       res.status(201).json(commentss_kata)
   } catch (error) {

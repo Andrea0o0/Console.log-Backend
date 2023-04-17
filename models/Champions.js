@@ -18,12 +18,16 @@ const championsSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   }],
+  winner:{
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
   function: {
     type:String
   },
   status:{
     type: String,
-    enum: ['REQUEST','START','REFUSED','EQUAL','FINISHED'],
+    enum: ['REQUEST','START','FINISHED'],
     default:'REQUEST'
   },
   time:{
