@@ -108,7 +108,7 @@ router.post('/', isAuthenticated, async (req, res, next) => {
         process.env.TOKEN_SECRET,
         { algorithm: 'HS256', expiresIn: "30d" }
       );
-      let timer = 60
+      let timer = 300
       const intervalId = setInterval(async function() {
         if(timer < 1){
           clearInterval(intervalId)

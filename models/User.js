@@ -4,7 +4,7 @@ const { Schema, model } = mongoose;
 const userSchema = new Schema({
   image:{
     type:String,
-    default:'/static/media/Logo.dade58b19ee0d8561d49.png'
+    default:'https://i.ibb.co/hLKh2RM/LOGO.png'
   },
   email: {
     type: String,
