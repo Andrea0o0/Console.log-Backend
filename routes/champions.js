@@ -22,8 +22,9 @@ router.get('/', isAuthenticated, async (req, res, next) => {;
 // @access  Private
 router.get('/:championsId', isAuthenticated, async (req, res, next) => {;
   try {
-    const { championId } = req.params
-    const champions = await Champions.findById(championId).populate('users')
+    const { championsId } = req.params
+    const champions = await Champions.findById(championsId).populate('users')
+    console.log(champions)
     res.status(200).json(champions)
   } catch (error) {
     next(error)
@@ -150,6 +151,12 @@ router.post('/', isAuthenticated, async (req, res, next) => {
           clearInterval(intervalId)
           const championss = await Champions.findById(newChampions._id)
           championss.users.length>1 ?  await Champions.findByIdAndUpdate(newChampions._id,{status:'START'}): await Champions.findByIdAndDelete(newChampions._id)
+          let end = false
+          const intervalStartId = setInterval(async function() {
+            await Champions.findByIdAndDelete(newChampions._id)
+            end = true
+          },14400000)
+          end === true && clearInterval(intervalStartId)
         }else{
            timer-=5
            await Champions.findByIdAndUpdate(newChampions._id,{time:timer})

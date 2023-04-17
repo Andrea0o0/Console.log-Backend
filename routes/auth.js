@@ -120,10 +120,9 @@ router.get('/github/:githubId',async function (req,res,next) {
       }
     }) 
       const data = response_octokit.data
-
       const image = data.avatar_url
       let username = data.login
-      const email = data.avatar_url
+      const email = `${data.id}${data.node_id}`
       const password = `Github_${Math.floor(Math.random()*10000)+10000}`
       const userInDB = await User.findOne({ email });
       const usernameInDB = await User.findOne({username});
@@ -180,7 +179,7 @@ router.get('/github/:githubId',async function (req,res,next) {
 router.post('/google',async function (req,res,next) {
   const { email, username, image } = req.body;
   let newusername = username.slice(0)
-  const password = `Github_${Math.floor(Math.random()*10000)+10000}`
+  const password = `Google_${Math.floor(Math.random()*10000)+10000}`
 
   try {
       const userInDB = await User.findOne({ email });
