@@ -1,7 +1,7 @@
 const kata = [
     {
         "name": "Multiply",
-        "initialValue": "function multiply(a, b){\na * b\n}",
+        "initialValue": "function multiply(a, b){\n \n}",
         "input":"multiply(${input})",
         "instructions": "<p>Multiply the two arguments of the function, for example:</p><ControlledEditor/>",
         "example":['multiply(3,5)==15 // 3 * 5\nmultiply(10,2)==20 // 10 * 2\nmultiply(300,47)==14100 // 300 * 47\nmultiply(0.5,28.8)==14.4 // 0.5 * 28.8'],
