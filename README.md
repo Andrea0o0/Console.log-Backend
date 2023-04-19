@@ -140,8 +140,8 @@ NO USED means a Backlog, or concepts that hasn't given me time to finish
 
 
 | Action           | Method    | Endpoint                             | Req.body                        | Private/Public |
-| **AUTH**    |        |   |                                 |     |
 |------------------|-----------|--------------------------------------|---------------------------------|-----------------|
+| **AUTH**    |        |   |                                 |     |
 | SIGN UP user     | POST      | /api/v1/auth/signup                  | { username, email, password }   |    Public |                 
 | LOG IN user      | POST      | /api/v1/auth/login                   | { email, password }             |    Public |               
 | LOG IN GOOGLE    | POST      | /api/v1/auth/login/google            | { email, username, image }      |    Public |     
