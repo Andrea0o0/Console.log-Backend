@@ -140,6 +140,7 @@ NO USED means a Backlog, or concepts that hasn't given me time to finish
 
 
 | Action           | Method    | Endpoint                             | Req.body                        | Private/Public |
+| **AUTH**    |        |   |                                 |     |
 |------------------|-----------|--------------------------------------|---------------------------------|-----------------|
 | SIGN UP user     | POST      | /api/v1/auth/signup                  | { username, email, password }   |    Public |                 
 | LOG IN user      | POST      | /api/v1/auth/login                   | { email, password }             |    Public |               
@@ -150,8 +151,7 @@ NO USED means a Backlog, or concepts that hasn't given me time to finish
 | User info    | GET       | /api/v1/auth/userinfo  |                                 |    Private |
 | Users    | GET       | /api/v1/auth/users  |                                 |    Private |
 | ME    | GET       | /api/v1/auth/me  |                                 |    Private |
-
-
+| **CHAMPIONS**    |        |   |                                 |     |
 | ONE CHAMPION    | GET       |  /champions/:championsId  |                                 |    Private |
 | STATUS CHAMPIONS    | GET       |  /champions/status/:typeStatus  |                                 |    Private |
 | EDIT USERS_REQUEST    | PUT       |  /champions/user-request/:championId  |                                 |    Private |
@@ -159,15 +159,13 @@ NO USED means a Backlog, or concepts that hasn't given me time to finish
 | CREATE CHAMPIONS   | POST       |  /champions/  |     { users_request, namefight,status, kata }            |    Private |
 | (NO USED) CLASSIFICATION    | PUT       |  /champions/classification/:championId  |                        |    Private |
 | DELETE CHAMPIONS   | POST       |  /champions/:championId  |                 |    Private |
-
-
+| **KATAS**    |        |   |                                 |     |
 | ALL KATAS    | GET       |  /kata/  |                                 |    Public |
 | ONE KATA    | GET       |  /kata/:kataId  |                                 |    Public |
 | EDIT KATA (NO USED)   | PUT       |  /kata/:kataId  |                                 |    Admin |
 | CREATE KATA (NO USED)   | PUT       |  /kata/  |                                 |    Admin |
 | DELETE KATA (NO USED)   | DELETE    |  /kata/:kataId  |                                 |    Admin |
-
-
+| **SOLUTIONS**    |        |   |                                 |     |
 | SOLUTIONS USER    | GET       |  /solutions/user  |                                 |    Private |
 | SOLUTIONS KATA & USER    | GET       |  /solutions/user/:kataId  |                                 |    Private |
 | SOLUTIONS KATA    | GET       |  /solutions/kata/:kataId  |                                 |    Private |
@@ -175,14 +173,12 @@ NO USED means a Backlog, or concepts that hasn't given me time to finish
 | EDIT SOLUTION (NO USED)    | PUT       |  /solutions/:solutionId  |                                 |    Private |
 | CREATE SOLUTION    | POST       |  /solutions/  |   {function, kata}                              |    Private |
 | DELETE SOLUTION    | DELETE       |  /solutions/:solutionId  |                                |    Admin |
-
-
+| **COMMENTS**    |        |   |                                 |     |
 | COMMENTS KATA    | GET       |  /comments/kata/:kataId  |                                 |    Private |
 | COMMENTS SOLUTIONS (NO USED)   | GET       |  /comments/solution/:solutionId  |                                 |    Private |
 | CREATE COMMENT  | POST      |  /comments/  |      {kata(can be solution or kata),comment}                      |    Private |
 | DELETE COMMENT (NO USED) | DELETE       |  /comments/:commentsId  |                           |    Admin |
-
-
+| **LIKES**    |        |   |                                 |     |
 | LIKES KATA  (NO USED)  | GET       |  /likes/kata/:kataId  |                                 |    Private |
 | LIKES SOLUTIONS (NO USED)   | GET       |  /likes/solution/:solutionId  |                                 |    Private |
 | CREATE LIKE (NO USED) | GET       |  /likes/  |      {kata(can be solution or kata)}                      |    Private |
