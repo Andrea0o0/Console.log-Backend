@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const { isAuthenticated, isAdmin } = require('../middlewares/jwt');
 
 // @desc    Get one champions by USER
-// @route   GET /champion
+// @route   GET /champions/:championsId
 // @access  Private
 router.get('/:championsId', isAuthenticated, async (req, res, next) => {;
   try {
@@ -18,6 +18,9 @@ router.get('/:championsId', isAuthenticated, async (req, res, next) => {;
 });
 
 
+// @desc    Get by status champions by USER
+// @route   GET /champions/status/:typeStatus
+// @access  Private
 router.get('/status/:typeStatus', isAuthenticated, async (req, res, next) => {
   const { typeStatus } = req.params
   const { _id:user_id } = req.payload
@@ -40,7 +43,7 @@ router.get('/status/:typeStatus', isAuthenticated, async (req, res, next) => {
 
 // @desc    Edit one champion USER_REQUEST
 // @route   PUT /champions/user-request/:championId
-// @access  Admin
+// @access  Private
 router.put('/user-request/:championId', isAuthenticated, async (req, res, next) => {
   const { championId } = req.params
   const { _id:user_id } = req.payload

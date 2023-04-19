@@ -3,7 +3,7 @@ const Kata = require('../models/Kata')
 const { isAuthenticated, isAdmin } = require('../middlewares/jwt');
 
 // @desc    Get all katas
-// @route   GET /kata
+// @route   GET /kata/
 // @access  Public
 router.get('/', async (req, res, next) => {;
   try {

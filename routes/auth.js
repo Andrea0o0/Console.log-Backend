@@ -174,7 +174,7 @@ router.get('/github/:githubId',async function (req,res,next) {
 })
 
 // @desc    LOG IN user with Google
-// @route   POST /api/v1/auth/login/google/:githubId
+// @route   POST /api/v1/auth/login/google
 // @access  Public
 router.post('/google',async function (req,res,next) {
   const { email, username, image } = req.body;
@@ -234,7 +234,7 @@ router.post('/google',async function (req,res,next) {
 
 
 // @desc    Edit Image
-// @route   PUT /api/v1/auth/me
+// @route   POST /api/v1/auth/imageusername
 // @access  Private
 router.post('/imageusername', isAuthenticated, async (req, res, next) => {
   const { _id:user_id } = req.payload
@@ -264,7 +264,7 @@ router.post('/imageusername', isAuthenticated, async (req, res, next) => {
 });
 
 // @desc    GET user
-// @route   GET /api/v1/auth/me
+// @route   GET /api/v1/auth/userinfo
 // @access  Private
 router.get('/userinfo', isAuthenticated, async (req, res, next) => {
   try {
@@ -276,7 +276,7 @@ router.get('/userinfo', isAuthenticated, async (req, res, next) => {
 });
 
 // @desc    GET all users
-// @route   GET /api/v1/auth/me
+// @route   GET /api/v1/auth/users
 // @access  Private
 router.get('/users', isAuthenticated, async (req, res, next) => {
   try {

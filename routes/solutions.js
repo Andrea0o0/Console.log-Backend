@@ -20,7 +20,7 @@ router.get('/user', isAuthenticated, async (req, res, next) => {;
 });
 
 // @desc    Get all solutions by USER & KATA
-// @route   GET /solutions/user
+// @route   GET /solutions/user/:kataId
 // @access  Private
 router.get('/user/:kataId', isAuthenticated, async (req, res, next) => {;
   const { kataId } = req.params
