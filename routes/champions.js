@@ -111,7 +111,7 @@ router.post('/', isAuthenticated, async (req, res, next) => {
         process.env.TOKEN_SECRET,
         { algorithm: 'HS256', expiresIn: "30d" }
       );
-      let timer = 300
+      let timer = 120
       const intervalId = setInterval(async function() {
         if(timer < 1){
           clearInterval(intervalId)
@@ -119,9 +119,12 @@ router.post('/', isAuthenticated, async (req, res, next) => {
           championss.users.length>1 ?  await Champions.findByIdAndUpdate(newChampions._id,{status:'START'}): await Champions.findByIdAndDelete(newChampions._id)
           let end = false
           const intervalStartId = setInterval(async function() {
-            await Champions.findByIdAndDelete(newChampions._id)
+            const responseComplete = await Champions.findById(newChampions._id,{status:'FINISHED'})
+            if(responseComplete !== null){
+              await Champions.findByIdAndDelete(responseComplete._id)
+            }
             end = true
-          },14400000)
+          },864000000)
           end === true && clearInterval(intervalStartId)
         }else{
            timer-=5
