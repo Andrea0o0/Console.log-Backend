@@ -586,14 +586,14 @@ const kata = [
         "example":["pigIt('Pig latin is cool'); // igPay atinlay siay oolcay\npigIt('Hello world !');     // elloHay orldway !"],
         "output": [ [`'Pig latin is cool'`,'igPay atinlay siay oolcay'],
                     [ `'This is my string'`,'hisTay siay ymay tringsay'],
-                    [`'How are you?'`,'owHay reaay ou?yay'],
-                    [`'under THE Influenceeeay :D'`,'nderuay HETay nfluenceeeayIay D:ay'],
-                    [`'Memories fading, I try to hold on'`,'emoriesMay ading,fay Iay rytay otay oldhay noay'],
-                    [`'The sound of your voice was my all, was my home'`,'heTay oundsay foay ouryay oicevay asway ymay ll,aay asway ymay omehay'],
-                    [`'1 2 3 4 5 buajajaja'`,'1ay 2ay 3ay 4ay 5ay uajajajabay'],
-                    [`"Summertime and the livin' is easy"`,"ummertimeSay ndaay hetay ivin'lay siay asyeay"],
-                    [`'Stars shining bright above you. Night breezes seem to whisper I love you.'`,'tarsSay hiningsay rightbay boveaay ou.yay ightNay reezesbay eemsay otay hisperway Iay ovelay ou.yay'],
-                    [`'L is for the way you look at me. O is for the only one I see. V is very, very extraordinary. E is even more than anyone that you adore can'`,'Lay siay orfay hetay ayway ouyay ooklay taay e.may Oay siay orfay hetay nlyoay neoay Iay ee.say Vay siay ery,vay eryvay xtraordinary.eay Eay siay veneay oremay hantay nyoneaay hattay ouyay doreaay ancay']
+                    [`'How are you ?'`,'owHay reaay ouyay ?'],
+                    [`'under THE Influenceeeay :D'`,'nderuay HETay nfluenceeeayIay :D'],
+                    [`'Memories fading, I try to hold on'`,'emoriesMay fading, Iay rytay otay oldhay noay'],
+                    [`'The sound of your voice was my all, was my home !!'`,'heTay oundsay foay ouryay oicevay asway ymay all, asway ymay omehay !!'],
+                    [`'1 2 3 4 5 buajajaja'`,'1 2 3 4 5 uajajajabay'],
+                    [`"Summertime and the livin' is easy"`,"ummertimeSay ndaay hetay livin' siay asyeay"],
+                    [`'Stars shining bright above you. Night breezes seem to whisper I love you.'`,'tarsSay hiningsay rightbay boveaay you. ightNay reezesbay eemsay otay hisperway Iay ovelay you.'],
+                    [`"L is for the way you look at me. O is for the only one I see. V is very, very extraordinary. E is even more!! than anyone!! that you adore can!!"`,'Lay siay orfay hetay ayway ouyay ooklay taay me. Oay siay orfay hetay nlyoay neoay Iay see. Vay siay very, eryvay extraordinary. Eay siay veneay more!! hantay anyone!! hattay ouyay doreaay can!!']
     ],
         "level": 2
     },
@@ -602,16 +602,16 @@ const kata = [
         "initialValue": "function humanReadable (seconds) {\n  return '';\n}",
         "input":"humanReadable(${input})",
         "instructions": `<p>Write a function, which takes a non-negative integer (seconds) as input and returns the time in a human-readable format <span class="border">(HH:MM:SS)</span></p><li><span class="border">HH</span> = hours, padded to 2 digits, range: 00 - 99</li>  <li><span class="border">MM</span> = minutes, padded to 2 digits, range: 00 - 59</li><li><span class="border">SS</span> = seconds, padded to 2 digits, range: 00 - 59</li><p>The maximum time never exceeds 359999 <span class="border">(99:59:59)</span></p><p>You can find some examples in the test fixtures.</p>`,
-        "output": [ [0, '00:00:00'],
-                    [59, '00:00:59']
-                    [60, '00:01:00'],
-                    [90, '00:01:30'],
-                    [3599, '00:59:59'],
-                    [3600, '01:00:00'],
-                    [45296, '12:34:56'],
-                    [86399, '23:59:59'],
-                    [86400, '24:00:00'],
-                    [359999, '99:59:59']
+        "output": [ [0, "00:00:00"],
+                    [59, "00:00:59"],
+                    [60, "00:01:00"],
+                    [90, "00:01:30"],
+                    [3599, "00:59:59"],
+                    [3600, "01:00:00"],
+                    [45296, "12:34:56"],
+                    [86399, "23:59:59"],
+                    [86400, "24:00:00"],
+                    [359999, "99:59:59"]
     ],
         "level": 2
     },
@@ -699,6 +699,72 @@ const kata = [
     ],
         "level": 1
     },
+    {
+        "name": "Human readable duration format",
+        "initialValue": "function formatDuration (seconds) {\n  // Complete this function\n}",
+        "input":"formatDuration(${input})",
+        "instructions": `
+        <p>Your task in order to complete this Kata is to write a function which formats a duration, given as a number of seconds, in a human-friendly way.</p>
+        <span class="border">"now"</span>
+        <p>The function must accept a non-negative integer. If it is zero, it just returns <span class="border">"now"</span>. Otherwise, the duration is expressed as a combination of <span class="border">years</span>, <span class="border">days</span>, <span class="border">hours</span>, <span class="border">minutes</span> and <span class="border">seconds</span>.</p>
+        <p>It is much easier to understand with an example:</p>
+        <ControlledEditor/>
+        <p>For the purpose of this Kata, a year is 365 days and a day is 24 hours.</p>
+        <p>Note that spaces are important.</p>
+        <h4>Detailed rules</h4>
+        <p>The resulting expression is made of components like <span class="border">4 seconds</span>, <span class="border">1 year</span>, etc. In general, a positive integer and one of the valid units of time, separated by a space. The unit of time is used in plural if the integer is greater than 1.</p>
+        <p>The components are separated by a comma and a space (<span class="border">", "</span>). Except the last component, which is separated by <span class="border">" and "</span>, just like it would be written in English.</p>
+        <p>A more significant units of time will occur before than a least significant one. Therefore, <span class="border">1 second and 1 year</span> is not correct, but 1 year and 1 second is.</p>
+        <p>Different components have different unit of times. So there is not repeated units like in <span class="border">5 seconds and 1 second</span>.</p>
+        <p>A component will not appear at all if its value happens to be zero. Hence, <span class="border">1 minute and 0 seconds</span> is not valid, but it should be just <span class="border">1 minute</span>.</p>
+        <p>A unit of time must be used "as much as possible". It means that the function should not return <span class="border">61 seconds</span>, but <span class="border">1 minute and 1 second</span> instead. Formally, the duration specified by of a component must not be greater than any valid more significant unit of time.</p>`,
+        "example":[`* For seconds = 62, your function should return 
+        "1 minute and 2 seconds"
+    * For seconds = 3662, your function should return
+        "1 hour, 1 minute and 2 seconds"`],
+        "output": [ [1,"1 second"],
+                    [62, "1 minute and 2 seconds"],
+                    [120, "2 minutes"],
+                    [3600, "1 hour"],
+                    [3662, "1 hour, 1 minute and 2 seconds"],
+                    [7000,"1 hour, 56 minutes and 40 seconds"],
+                    [10000,"2 hours, 46 minutes and 40 seconds"],
+                    [100000, "1 day, 3 hours, 46 minutes and 40 seconds"],
+                    [100000000,"3 years, 62 days, 9 hours, 46 minutes and 40 seconds"],
+                    [82780000000,"2624 years, 341 days, 20 hours, 26 minutes and 40 seconds"]
+    ],
+        "level": 1
+    },
+    {
+        "name": "Range Extraction",
+        "initialValue": `function solution(list){
+          // TODO: complete solution
+        }`,
+        "input":"solution(${input})",
+        "instructions": `
+        <p>A format for expressing an ordered list of integers is to use a comma separated list of either</p>
+        <ul>
+        <li>individual integers</li>
+        <li>or a range of integers denoted by the starting integer separated from the end integer in the range by a dash, '-'. The range includes all integers in the interval including both endpoints. It is not considered a range unless it spans at least 3 numbers. For example "12,13,15-17"</li>
+        </ul>
+        <p>Complete the solution so that it takes a list of integers in increasing order and returns a correctly formatted string in the range format.</p>
+        <h4>Example</h4>
+        <ControlledEditor/>`,
+        "example":[`solution([-10, -9, -8, -6, -3, -2, -1, 0, 1, 3, 4, 5, 7, 8, 9, 10, 11, 14, 15, 17, 18, 19, 20]);
+        // returns "-10--8,-6,-3-1,3-5,7-11,14,15,17-20"`],
+        "output": [ [`[-6, -3, -2, -1, 0, 1, 3, 4, 5, 7, 8, 9, 10, 11, 14, 15, 17, 18, 19, 20]`, "-6,-3-1,3-5,7-11,14,15,17-20"],
+                    [`[-10, -9, -8, -6, -3, -2, -1, 0, 1, 3, 4, 5, 7, 8, 9, 10, 11, 14, 15, 17, 18, 19, 20]`,"-10--8,-6,-3-1,3-5,7-11,14,15,17-20"],
+                    [`[-50.5,-49.5,-48.5,-20,-19,-18,-3,-2,-1,0,1,1.5,6,9,15]`,"-50.5--48.5,-20--18,-3-1,1.5,6,9,15"],
+                    [`[-8,-8,-7,-6,-5,-4,-1,-0,1,5,7,8,9,10]`,"-8,-8--4,-1-1,5,7-10"],
+                    [`[-22,-21,-19,2,3,6,7,9,10]`,"-22,-21,-19,2,3,6,7,9,10"],
+                    [`[-256,-22,-21,-20,-19,63,2,3,6,36,7,8,9,10,63]`,"-256,-22--19,63,2,3,6,36,7-10,63"],
+                    [`[-45,-44,-43.0299,-42,-3,7,8,9.00000,10]`,"-45,-44,-43.0299,-42,-3,7-10"],
+                    [`[-36,-35.00000000000000000000000000001,-34,-4-33-3,-32]`,"-36--34,-40,-32"],
+                    [`[-34-1-2,-30,-27-3+1,-28,-9*3,0,3,4,5,8.0000000000000000000003,9,10]`,"-37,-30--27,0,3-5,8-10"],
+                    [`[-((9*9)**2),-6560,-656*8-1582+271.00000000000002,-3,-2,-1,67,68,'69','70',71]`,"-6561--6559,-3--1,67,68,69,70,71"]
+      ],
+        "level": 1
+      }
 ] 
 
 module.exports = kata;
