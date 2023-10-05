@@ -15,6 +15,20 @@ router.get('/kata/:kataId', isAuthenticated, async (req, res, next) => {
   }
 });
 
+// @desc    Get comment by USER
+// @route   GET /comments/user
+// @access  Private
+router.get('/user/:kataId', isAuthenticated, async (req, res, next) => {
+  const { kataId } = req.params
+  try {
+    const { _id:user_id } = req.payload
+    const comment = await Comment.findOne({user:user_id,kata:kataId}).populate('user')
+    res.status(200).json(comment)
+  } catch (error) {
+    next(error)
+  }
+});
+
 // @desc    Get all commentss from SOLUTION
 // @route   GET /comments/solution/:solutionId
 // @access  Private
@@ -42,6 +56,7 @@ router.post('/', isAuthenticated, async (req, res, next) => {
       next(error)
   }
 });
+
 
 // @desc    Delete one comments
 // @route   DELETE /comments/:commentsId
